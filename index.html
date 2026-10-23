@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f8fc">
+  <meta name="description" content="Free QR code generator. Create QR codes from any URL or text and download them as PNG or SVG. No signup required.">
+  <title>QR Studio — Free QR Code Generator</title>
+  <style>
+    :root{color-scheme:light;--bg:#f7f8fc;--paper:#fff;--ink:#19233c;--muted:#68738a;--line:#e4e7f0;--accent:#5149eb;--accent2:#716afa;--soft:#f0efff;--radius:20px;--shadow:0 18px 52px rgba(31,43,84,.065)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.58 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans KR",Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.48}a{color:inherit}a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #aaa5ff;outline-offset:3px} .wrap{max-width:1130px;margin:auto;padding:0 24px}
+    .topbar{background:#fff;border-bottom:1px solid var(--line)}.toprow{height:76px;display:flex;align-items:center;justify-content:space-between;gap:16px}.brand{display:flex;align-items:center;gap:12px;font-weight:800;font-size:19px;letter-spacing:-.6px;text-decoration:none}.brand-icon{display:grid;grid-template-columns:repeat(3,6px);gap:3px;background:var(--accent);padding:10px;border-radius:11px}.brand-icon span{background:#fff;border-radius:1px;width:6px;height:6px}.brand-icon span:nth-child(2),.brand-icon span:nth-child(6){opacity:.25}.topright{display:flex;align-items:center;gap:14px}.tag{font-size:12px;font-weight:700;color:#5149d9;background:#f0efff;border:1px solid #e4e2ff;border-radius:99px;padding:5px 11px}.lang{border:1px solid var(--line);border-radius:10px;background:white;padding:8px 12px;color:#374363;font-weight:700}
+    .hero{text-align:center;padding:62px 0 38px}.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:800;color:#5953d7}.eyebrow:before{content:"";width:7px;height:7px;border-radius:50%;background:#706af5}.hero h1{font-size:clamp(33px,5vw,52px);line-height:1.22;letter-spacing:-2.5px;font-weight:850;margin:17px 0 12px}.hero h1 span{color:var(--accent)}.hero p{margin:0;color:var(--muted);font-size:16px}
+    .workspace{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:22px;align-items:start;padding-bottom:38px}.panel{background:var(--paper);border:1px solid var(--line);box-shadow:var(--shadow);border-radius:var(--radius);overflow:hidden}.panel-head{padding:25px 28px 0;display:flex;align-items:center;justify-content:space-between;gap:15px}.panel-title{font-size:19px;font-weight:800;letter-spacing:-.55px;margin:0}.mini{font-size:12px;color:var(--muted)}.editor{padding:26px 28px 30px}.field{margin-bottom:24px}.field-label{display:block;font-size:13px;font-weight:800;letter-spacing:-.1px;margin-bottom:10px}.field-help{font-size:12px;color:var(--muted);margin:7px 0 0}.inputbox{width:100%;border:1px solid #d9deea;background:#fff;border-radius:12px;color:var(--ink);padding:13px 14px;outline:none;transition:box-shadow .18s,border-color .18s}.inputbox:hover{border-color:#bfc5d8}.inputbox:focus{border-color:var(--accent);box-shadow:0 0 0 3px #f0efff}textarea.inputbox{height:117px;resize:vertical;line-height:1.6}.inline{display:grid;grid-template-columns:1fr 1fr;gap:16px}.color-row{display:flex;align-items:center;gap:10px;border:1px solid #d9deea;padding:8px 11px;border-radius:12px;min-height:49px}.color-row input{width:33px;height:32px;border:0;padding:0;background:transparent;cursor:pointer}.hex{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}.select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2368738a' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-size:19px;background-position:right 11px center;background-repeat:no-repeat;padding-right:38px;height:49px}.editor-actions{display:flex;gap:10px;margin-top:9px}.btn{display:flex;align-items:center;justify-content:center;gap:8px;text-align:center;border-radius:12px;padding:13px 18px;font-size:14px;font-weight:800;transition:transform .15s,background-color .15s;border:1px solid transparent;min-height:49px}.btn:active{transform:translateY(1px)}.primary{background:var(--accent);color:#fff}.primary:hover:not(:disabled){background:#423bd8}.secondary{background:white;color:#313a57;border-color:#dce0eb}.secondary:hover:not(:disabled){background:#f8f8fc}.btn svg{width:18px;height:18px;flex:none}.grow{flex:1}
+    .preview-panel .previewbox{min-height:360px;display:flex;align-items:center;justify-content:center;margin:25px 28px 0;border:1px solid #edeef4;border-radius:18px;background-color:#fafbfe;background-image:radial-gradient(#e4e6f0 .8px,transparent .8px);background-size:20px 20px}.qr-holder{border-radius:15px;background:white;padding:22px;box-shadow:0 12px 38px rgba(37,44,77,.09);display:flex;align-items:center;justify-content:center;width:282px;height:282px}.qr-holder canvas{display:block;width:100%;height:auto;image-rendering:pixelated}.preview-placeholder{padding:24px;text-align:center;color:var(--muted);font-size:14px}.loader-icon{width:46px;height:46px;margin:0 auto 14px;border:3px dashed #bcb8ef;border-radius:12px;transform:rotate(12deg)}.preview-bottom{padding:20px 28px 29px}.status{min-height:27px;font-size:13px;text-align:center;margin:0 0 15px;color:#56637a;overflow-wrap:anywhere}.status.error{color:#c53943}.status.success{color:#23795a}.download-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.privnote{display:flex;align-items:flex-start;gap:8px;background:#f0fbf5;color:#24734f;border:1px solid #ddf3e6;border-radius:10px;padding:11px 13px;margin:19px 0 0;font-size:12px;line-height:1.5}.privnote svg{width:17px;height:17px;flex:none;margin-top:1px}
+    .benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:4px 0 52px}.feature{background:white;border:1px solid var(--line);padding:23px;border-radius:17px}.feature-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;background:var(--soft);color:var(--accent);font-size:20px}.feature strong{display:block;font-size:14px;margin:12px 0 5px}.feature p{margin:0;color:var(--muted);font-size:12px}.footer{border-top:1px solid var(--line);padding:24px 0 33px;color:var(--muted);font-size:12px}.footer .wrap{display:flex;justify-content:space-between;gap:20px}.footer a{color:#5553be;text-underline-offset:3px}
+    @media (max-width:850px){.workspace{grid-template-columns:1fr}.previewbox{min-height:340px}.hero{padding-top:45px}.panel{max-width:720px;width:100%;margin:auto}}@media (max-width:520px){.wrap{padding:0 15px}.toprow{height:65px}.hero{padding:35px 0 29px}.hero h1{font-size:34px;letter-spacing:-1.4px}.hero p{font-size:14px}.tag{display:none}.panel-head{padding:22px 20px 0}.editor{padding:21px 20px 24px}.inline{gap:11px}.preview-panel .previewbox{margin:21px 20px 0;min-height:316px}.qr-holder{width:254px;height:254px;padding:19px}.preview-bottom{padding:20px}.benefits{grid-template-columns:1fr;padding-bottom:37px}.footer .wrap{display:block}.footer .wrap span{display:block;margin-top:5px}}
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+  <header class="topbar"><div class="wrap toprow">
+    <a class="brand" href="#top" aria-label="QR Studio"><span class="brand-icon" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>QR Studio</a>
+    <div class="topright"><span class="tag" data-i18n="headerTag">100% free · No signup</span><select id="langSelect" class="lang" aria-label="Select language"><option value="en" selected>English</option><option value="ko">한국어</option></select></div>
+  </div></header>
+  <main id="top" class="wrap">
+    <section class="hero" aria-labelledby="hero-title"><span class="eyebrow" data-i18n="eyebrow">Free QR Code Generator</span><h1 id="hero-title"><span data-i18n="heroFirst">Create QR codes.</span><br><span data-i18n="heroSecond">It’s that simple.</span></h1><p data-i18n="heroText">Turn any URL or text into a downloadable, high-quality QR code. For free.</p></section>
+    <section class="workspace" aria-label="QR code generator">
+      <div class="panel"><div class="panel-head"><h2 class="panel-title" data-i18n="customize">Customize your QR</h2><span class="mini" data-i18n="settingsSub">Make it yours</span></div>
+        <div class="editor">
+          <div class="field"><label class="field-label" for="content" data-i18n="contentLabel">URL or text</label><textarea id="content" class="inputbox" spellcheck="false" maxlength="2500" placeholder="https://example.com">https://example.com</textarea><p class="field-help" id="byteHelp" aria-live="polite"></p></div>
+          <div class="field"><div class="inline"><div><label class="field-label" for="fg" data-i18n="fgLabel">QR color</label><div class="color-row"><input type="color" id="fg" value="#19233c" aria-label="QR foreground color"><span class="hex" id="fgText">#19233C</span></div></div><div><label class="field-label" for="bg" data-i18n="bgLabel">Background color</label><div class="color-row"><input type="color" id="bg" value="#ffffff" aria-label="QR background color"><span class="hex" id="bgText">#FFFFFF</span></div></div></div></div>
+          <div class="field"><div class="inline"><div><label class="field-label" for="size" data-i18n="sizeLabel">Image size</label><select class="inputbox select" id="size"><option value="256">256 × 256 px</option><option value="512" selected>512 × 512 px</option><option value="1024">1024 × 1024 px</option><option value="2048">2048 × 2048 px</option></select></div><div><label class="field-label" for="ec" data-i18n="ecLabel">Error correction</label><select class="inputbox select" id="ec"><option value="L">L · 7%</option><option value="M" selected>M · 15%</option><option value="Q">Q · 25%</option><option value="H">H · 30%</option></select></div></div><p class="field-help" data-i18n="ecHelp">M is recommended for everyday use.</p></div>
+          <div class="editor-actions"><button id="generate" class="btn primary grow" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM15 13h2v2h-2zM20 13v4M14 18v2M18 20h2"/></svg><span data-i18n="generate">Generate QR Code</span></button><button id="reset" class="btn secondary" type="button" data-i18n="reset">Reset</button></div>
+        </div>
+      </div>
+      <div class="panel preview-panel"><div class="panel-head"><h2 class="panel-title" data-i18n="previewTitle">Live preview</h2><span class="mini" data-i18n="previewSub">Ready to scan</span></div>
+        <div class="previewbox"><div id="qrHolder" class="qr-holder" aria-label="QR Code preview"><div class="preview-placeholder"><div class="loader-icon" aria-hidden="true"></div><span data-i18n="loading">Preparing your QR code…</span></div></div></div>
+        <div class="preview-bottom"><p class="status" id="status" role="status" aria-live="polite"></p><div class="download-row"><button id="downloadPNG" class="btn primary" type="button" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 18v3h14v-3"/></svg><span>PNG</span> <span data-i18n="download">Download</span></button><button id="downloadSVG" class="btn secondary" type="button" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 18v3h14v-3"/></svg><span>SVG</span> <span data-i18n="download">Download</span></button></div><p class="privnote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4"/></svg><span data-i18n="privacy">Your input is never sent to a server. QR codes are created in your browser.</span></p></div>
+      </div>
+    </section>
+    <section class="benefits" aria-label="Benefits">
+      <article class="feature"><div class="feature-icon" aria-hidden="true">✓</div><strong data-i18n="f1Title">Free, no watermarks</strong><p data-i18n="f1Desc">Create as many as you want. No account or payment required.</p></article>
+      <article class="feature"><div class="feature-icon" aria-hidden="true">↧</div><strong data-i18n="f2Title">Print-ready downloads</strong><p data-i18n="f2Desc">Download PNG or crisp, scalable SVG files.</p></article>
+      <article class="feature"><div class="feature-icon" aria-hidden="true">◇</div><strong data-i18n="f3Title">No expiring redirects</strong><p data-i18n="f3Desc">Your QR code contains your original URL, unchanged.</p></article>
+    </section>
+  </main>
+  <footer class="footer"><div class="wrap"><div>© <span id="year"></span> QR Studio · <span data-i18n="footerText">Free, browser-based QR code generator</span></div><span><span data-i18n="powered">QR library:</span> <a href="https://github.com/kazuhikoarase/qrcode-generator" target="_blank" rel="noopener noreferrer">qrcode-generator (MIT)</a></span></div></footer>
+<script>
+(function(){
+  'use strict';
+  const ko={headerTag:'100% 무료 · 회원가입 없음',eyebrow:'FREE QR CODE GENERATOR',heroFirst:'QR 코드 만들기,',heroSecond:'이렇게 쉬울 수 있어요.',heroText:'URL이나 텍스트를 입력하고 고화질 QR 코드를 무료로 다운로드하세요.',customize:'QR 코드 설정',settingsSub:'나만의 코드 만들기',contentLabel:'URL 또는 텍스트',fgLabel:'QR 코드 색상',bgLabel:'배경색',sizeLabel:'이미지 크기',ecLabel:'오류 복원 수준',ecHelp:'일반적인 사용은 M을 권장합니다.',generate:'QR 코드 생성',reset:'초기화',previewTitle:'실시간 미리보기',previewSub:'스캔할 수 있는 코드',loading:'QR 코드를 준비하고 있습니다…',download:'다운로드',privacy:'입력 내용은 서버로 전송하지 않습니다. QR 코드는 브라우저에서 생성됩니다.',f1Title:'완전 무료, 워터마크 없음',f1Desc:'회원가입이나 결제 없이 원하는 만큼 생성하세요.',f2Title:'인쇄용 고화질 다운로드',f2Desc:'PNG와 확대해도 선명한 SVG 형식을 지원합니다.',f3Title:'URL을 그대로 인코딩',f3Desc:'만료되는 단축 링크 없이 입력한 URL을 직접 담습니다.',footerText:'브라우저 기반 무료 QR 코드 생성기',powered:'QR library:',ready:'QR 코드가 준비되었습니다.',empty:'URL이나 텍스트를 입력해 주세요.',tooLong:'텍스트가 너무 깁니다. 길이를 줄이거나 오류 복원 수준을 낮춰 주세요.',loadFail:'QR 라이브러리를 불러오지 못했습니다. 인터넷 연결을 확인하고 새로고침해 주세요.',contrast:'색상 대비가 낮아 일부 기기에서 스캔이 어려울 수 있습니다.',bytes:'UTF-8 바이트',error:'QR 코드를 생성할 수 없습니다. 입력값을 확인해 주세요.'};
+  const en={headerTag:'100% free · No signup',eyebrow:'FREE QR CODE GENERATOR',heroFirst:'Create QR codes.',heroSecond:'It’s that simple.',heroText:'Turn any URL or text into a downloadable, high-quality QR code. For free.',customize:'Customize your QR',settingsSub:'Make it yours',contentLabel:'URL or text',fgLabel:'QR color',bgLabel:'Background color',sizeLabel:'Image size',ecLabel:'Error correction',ecHelp:'M is recommended for everyday use.',generate:'Generate QR Code',reset:'Reset',previewTitle:'Live preview',previewSub:'Ready to scan',loading:'Preparing your QR code…',download:'Download',privacy:'Your input is never sent to a server. QR codes are created in your browser.',f1Title:'Free, no watermarks',f1Desc:'Create as many as you want. No account or payment required.',f2Title:'Print-ready downloads',f2Desc:'Download PNG or crisp, scalable SVG files.',f3Title:'No expiring redirects',f3Desc:'Your QR code contains your original URL, unchanged.',footerText:'Free, browser-based QR code generator',powered:'QR library:',ready:'Your QR code is ready.',empty:'Enter a URL or text to get started.',tooLong:'Text is too long. Try shortening it or lowering error correction.',loadFail:'Could not load the QR library. Check your internet connection and refresh.',contrast:'Low color contrast may make this code harder to scan.',bytes:'UTF-8 bytes',error:'Could not generate this QR code. Please check the input.'};
+  let language='en',currentQR=null,renderTimer=null;
+  const $=id=>document.getElementById(id);
+  const els={content:$('content'),fg:$('fg'),bg:$('bg'),size:$('size'),ec:$('ec'),holder:$('qrHolder'),status:$('status'),png:$('downloadPNG'),svg:$('downloadSVG')};
+  const words=()=>language==='ko'?ko:en;
+  function updateText(){
+    document.documentElement.lang=language;
+    document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=words()[el.dataset.i18n]||el.textContent;});
+    $('langSelect').value=language;
+    $('byteHelp').textContent=`${new TextEncoder().encode(els.content.value).length.toLocaleString()} ${words().bytes}`;
+    if(currentQR){setStatus(colorWarning()?words().contrast:words().ready,colorWarning()?'':'success');}
+  }
+  function setStatus(message,type=''){els.status.textContent=message;els.status.className='status '+type;}
+  function colorWarning(){
+    const luminance=(hex)=>{const vals=[1,3,5].map(n=>parseInt(hex.slice(n,n+2),16)/255).map(c=>c<=0.04045?c/12.92:Math.pow((c+0.055)/1.055,2.4));return vals[0]*0.2126+vals[1]*0.7152+vals[2]*0.0722;};
+    const a=luminance(els.fg.value),b=luminance(els.bg.value);
+    return (Math.max(a,b)+0.05)/(Math.min(a,b)+0.05)<3;
+  }
+  function updatePreview(){
+    $('fgText').textContent=els.fg.value.toUpperCase();$('bgText').textContent=els.bg.value.toUpperCase();
+    $('byteHelp').textContent=`${new TextEncoder().encode(els.content.value).length.toLocaleString()} ${words().bytes}`;
+    els.png.disabled=true;els.svg.disabled=true;currentQR=null;
+    const value=els.content.value;
+    if(!value.trim()){els.holder.replaceChildren(makePlaceholder());setStatus(words().empty,'error');return;}
+    if(typeof window.qrcode!=='function'){els.holder.replaceChildren(makePlaceholder());setStatus(words().loadFail,'error');return;}
+    try{
+      window.qrcode.stringToBytes=window.qrcode.stringToBytesFuncs['UTF-8'];
+      const qr=window.qrcode(0,els.ec.value);
+      qr.addData(value,'Byte');qr.make();
+      currentQR=qr;const canvas=renderCanvas(qr,Number(els.size.value));
+      els.holder.replaceChildren(canvas);els.png.disabled=false;els.svg.disabled=false;
+      setStatus(colorWarning()?words().contrast:words().ready,colorWarning()?'':'success');
+    }catch(err){console.warn('QR generation:',err);els.holder.replaceChildren(makePlaceholder());setStatus(words().tooLong,'error');}
+  }
+  function makePlaceholder(){const d=document.createElement('div');d.className='preview-placeholder';d.textContent='QR';return d;}
+  function renderCanvas(qr,px){
+    const count=qr.getModuleCount(),margin=4,total=count+2*margin,unit=px/total;
+    const canvas=document.createElement('canvas');canvas.width=canvas.height=px;
+    canvas.setAttribute('role','img');canvas.setAttribute('aria-label','Generated QR code');
+    const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;
+    ctx.fillStyle=els.bg.value;ctx.fillRect(0,0,px,px);ctx.fillStyle=els.fg.value;
+    for(let row=0;row<count;row++)for(let col=0;col<count;col++){
+      if(qr.isDark(row,col)){
+        const x=Math.round((col+margin)*unit),y=Math.round((row+margin)*unit);
+        const x2=Math.round((col+margin+1)*unit),y2=Math.round((row+margin+1)*unit);
+        ctx.fillRect(x,y,x2-x,y2-y);
+      }
+    }
+    return canvas;
+  }
+  function makeSVG(qr){
+    const count=qr.getModuleCount(),margin=4,total=count+margin*2;
+    let path='';
+    for(let r=0;r<count;r++)for(let c=0;c<count;c++)if(qr.isDark(r,c))path+=`M${c+margin} ${r+margin}h1v1h-1z`;
+    return `<svg xmlns="http://www.w3.org/2000/svg" width="${total}" height="${total}" viewBox="0 0 ${total} ${total}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="${els.bg.value}"/><path d="${path}" fill="${els.fg.value}"/></svg>`;
+  }
+  function saveBlob(blob,filename){const url=URL.createObjectURL(blob),link=document.createElement('a');link.href=url;link.download=filename;document.body.appendChild(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+  function downloadPNG(){if(!currentQR)return;els.holder.querySelector('canvas').toBlob(blob=>{if(blob)saveBlob(blob,'qr-code.png');},'image/png');}
+  function downloadSVG(){if(!currentQR)return;saveBlob(new Blob([makeSVG(currentQR)],{type:'image/svg+xml;charset=utf-8'}),'qr-code.svg');}
+  function schedule(){clearTimeout(renderTimer);renderTimer=setTimeout(updatePreview,220);}
+  els.content.addEventListener('input',schedule);
+  [els.fg,els.bg,els.size,els.ec].forEach(el=>el.addEventListener('input',schedule));
+  $('generate').addEventListener('click',()=>{clearTimeout(renderTimer);updatePreview();});
+  $('reset').addEventListener('click',()=>{els.content.value='https://example.com';els.fg.value='#19233c';els.bg.value='#ffffff';els.size.value='512';els.ec.value='M';updatePreview();});
+  $('langSelect').addEventListener('change',(event)=>{language=event.target.value;updateText();});
+  els.png.addEventListener('click',downloadPNG);els.svg.addEventListener('click',downloadSVG);
+  $('year').textContent=new Date().getFullYear();updateText();
+  if(typeof window.qrcode==='function'){updatePreview();}
+  else{
+    // Alternative CDN if the primary CDN is unavailable.
+    const script=document.createElement('script');
+    script.src='https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js';
+    script.onload=updatePreview;script.onerror=updatePreview;document.head.appendChild(script);
+  }
+})();
+</script>
+</body>
+</html>
